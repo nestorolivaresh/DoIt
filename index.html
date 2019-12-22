@@ -23,13 +23,47 @@
     <title>Do It!</title>
   </head>
   <body>
-    
     <div class="container">
-      <div class="title-wrapper">
-      </div>
+      <div class="title-wrapper"></div>
 
       <div class="task-wrapper">
-        <div class="row cards-wrapper"></div>
+        <div class="row cards-wrapper">
+          <div class="col s6 card-container">
+            <div class="card task-card" id="card-generator" >
+              <form class="task-form" >
+                <div class="card-content blue-text">
+                  <div class="input-field">
+                    <input
+                      type="text"
+                      class="task-card-title"
+                      id="card-generator-title"
+                      maxlength="150"
+                      placeholder="Enter your Task Title"
+                      spellcheck="false"
+                    />
+                  </div>
+                  <div class="input-field">
+                    <input
+                      type="text"
+                      class="task-card-txt"
+                      id="card-generator-desc"
+                      maxlength="150"
+                      placeholder="Describe Your Task"
+                      spellcheck="false"
+                    />
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-card btn-submit"
+                    onclick="submitTask()"
+                  >
+                    <i class="material-icons add-icon">add_box</i> Add Task
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="row valign-wrapper">
         <div class="col s12">
@@ -58,7 +92,10 @@
                   <p class="instruction-txt">
                     If you don't have any tasks, click here!
                   </p>
-                  <button class="btn btn-start btn-large blue" onclick="showCard()">
+                  <button
+                    class="btn btn-start btn-large blue"
+                    onclick="renderCardList()"
+                  >
                     Add your tasks
                   </button>
                 </div>
