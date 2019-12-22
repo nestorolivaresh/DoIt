@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <meta http-equiv="X-UA-Compatible" content="ie=edge" /> -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Kreon|Quicksand&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="http://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/mobile.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+    <title>Do It!</title>
+  </head>
+  <body>
+    
+    <div class="container">
+      <div class="title-wrapper">
+      </div>
+
+      <div class="task-wrapper">
+        <div class="row cards-wrapper"></div>
+      </div>
+      <div class="row valign-wrapper">
+        <div class="col s12">
+          <div class="card popup white darken-1 large center-align">
+            <div class="card-content card-header">
+              <span class="card-title title-txt"
+                >Do It!<img src="images/image.png" id="img"
+              /></span>
+              <p class="card-content-txt">
+                The best way to organize your tasks
+              </p>
+            </div>
+
+            <div class="row card-instructions">
+              <div class="col s12 m6 info-div">
+                <div class="has-tasks">
+                  <p class="instruction-txt">Lets check your tasks!</p>
+                  <button class="btn btn-check btn-large blue">
+                    Check your tasks
+                  </button>
+                </div>
+              </div>
+
+              <div class="col s12 m6 info-div">
+                <div class="no-tasks">
+                  <p class="instruction-txt">
+                    If you don't have any tasks, click here!
+                  </p>
+                  <button class="btn btn-start btn-large blue" onclick="showCard()">
+                    Add your tasks
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="js/app2.js"></script>
+  </body>
+</html>
