@@ -21,7 +21,7 @@ font-family: 'Quicksand', sans-serif;
 }
 
 .card-header{
-  padding-top: 6rem !important;
+  padding-top: 4rem !important;
   box-sizing: content-box;
   padding-bottom: 0 !important;
 }
@@ -54,14 +54,13 @@ padding-left: 1rem;
 }
 
 .instruction-txt{
-  font-size: 1.5rem;
+  font-size: 3rem;
   color: var(--primary-color);
   padding: 0;
   margin: 0;
 }
 
 .info-div{
-  padding: 0;
   box-sizing: content-box;
 }
 
@@ -76,10 +75,6 @@ padding-left: 1rem;
 .btn{
   font-family: 'Quicksand', sans-serif;
   text-transform: none !important;
-}
-
-.no-tasks{
-  padding-right: 2.6rem;
 }
 
 .title-div{
@@ -157,25 +152,12 @@ color: var(--primary-color);
 
 .checkbox-blue[type="checkbox"]+span:not(.lever):before, [type="checkbox"]:not(.filled-in)+span:not(.lever):after {
     border: 2px solid #0277bd;
-    top: 5px !important;
 }
 
 
 .checkbox-blue[type="checkbox"]:checked+span:not(.lever):before {
-  top: 0 !important;
-  left: -5px;
-  width: 12px;
-  height: 22px;
-  border-top: 2px solid transparent;
-  border-left: 2px solid transparent;
   border-right: 2px solid #0277bd;
   border-bottom: 2px solid #0277bd;
-  -webkit-transform: rotate(40deg);
-  transform: rotate(40deg);
-  -webkit-backface-visibility: hidden;
-  backface-visibility: hidden;
-  -webkit-transform-origin: 100% 100%;
-  transform-origin: 100% 100%;
 }
 
 ::placeholder {

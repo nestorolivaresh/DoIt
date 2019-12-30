@@ -1,0 +1,27 @@
+@media (max-width: 768px) {
+.popup, .input-field{
+width: 100%;
+}
+
+.card-title{
+  font-size: 5rem !important;
+}
+
+.card-content-txt{
+  padding-top: 1rem !important;
+  font-size: 1.5rem !important;
+}
+
+.subtitle-txt{
+text-align: center;
+}
+
+.card-container{
+  width: 325px !important;
+}
+
+.task-card-title{
+  font-size: 1.7rem !important;
+}
+
+}

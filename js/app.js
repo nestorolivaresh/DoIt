@@ -1,64 +1,250 @@
-const wrapper = document.querySelector(".valign-wrapper"), 
-      checkBtn = document.querySelector(".btn-check"), 
-      startBtn = document.querySelector(".btn-start"),
-      titleWrapper = document.querySelector(".title-wrapper"),
-      cardsWrapper = document.querySelector(".cards-wrapper");
+const cardsWrapper = document.querySelector(".cards-wrapper");
 
-let id = 0;
-let tasksList = [];
+let generatorId = 0;
+let tasks = [];
 
-const generateID = () => id++;
+const renderCardList = () => {
+	document.querySelector(".valign-wrapper").style.display = "none";
+  console.log("Show card");
+	addTitle();
+	showCardGenerator();
+};
 
-const removeStartDiv = () => wrapper.style.display = "none";
-
-const startDiv = () => {
-  removeStartDiv();
-
-  titleWrapper.innerHTML += `
+const addTitle = () => {
+	const titleWrapper = document.querySelector(".title-wrapper");
+  titleWrapper.innerHTML = `
   <div class="title-div">
     <span class="title-txt white-text">Do It!<img src="images/image2.png" id="img2"></span>
     <p class="content-txt subtitle-txt">The best way to organize your tasks</p>
   </div>
-  <a href="#" class="btn-floating btn-large right buttom" id="add"><i class="plus-btn large white material-icons">add</i></a>
-  `; 
+  `
+};
 
-  addCard();
-  const addBtn = document.getElementById("add");
-  addBtn.addEventListener("click", addCard);
-
+const generateId = () => {
+	let tasksInLS = JSON.parse(localStorage.getItem("tasks"));
+	if(tasksInLS !== null){
+	generatorId = tasksInLS[tasksInLS.length-1].id;
+	generatorId ++;
+} else {
+	generatorId = 0;
+	generatorId ++
+}
+	return generatorId;
 }
 
-startBtn.addEventListener("click", startDiv);
+const showCardGenerator = () => {
+  console.log("Add card function triggered");
+	const cardGen = document.getElementById("card-generator");
+	cardGen.style.display = "block";
+	showList();
+};
 
-const addCard = () => {
 
-generateID();
 
-cardsWrapper.innerHTML = `
+const submitTask = (id=null) => {
+	let cardTitle;
+	let cardDescription;
+	let checkbox;
+	if(id){
+		cardTitle = document.getElementById(`task-${id}-title`).value;
+		cardDescription = document.getElementById(`task-${id}-desc`).value;
+		console.log(checkbox);
+		tasks.forEach(task => {
+			if(task.id === id){
+				task.title = cardTitle;
+				task.description = cardDescription;
+				hideBtns(id);
+				editTasksLS(id, cardTitle, cardDescription);
+			}
+		});
+		console.log(tasks)
+		// editCard()
+	} else {
+		cardTitle = document.getElementById("card-generator-title");
+		cardDescription = document.getElementById("card-generator-desc");
+		console.log(checkbox);
+		const generatedId = generateId();
+		console.log('generated id from id generator ',generatedId)
+		addTask(generatedId,cardTitle.value,cardDescription.value,)
+		cardTitle.value = "";
+		cardDescription.value = "";
+	}
+};
 
-    <div class="col s12 card-container">
-      <div class="card task-card" id="${id}">
-        <form class="task-form">
-          <div class="card-content blue-text">
-            <div class="input-field">
-              <input type="text" class="task-card-title" maxLength="150" placeholder="Enter your Task Title" spellcheck="false">
-            </div>
-            <div class="input-field">
-              <textarea class="materialize-textarea task-card-txt" maxLength="150" placeholder="Describe Your Task" spellcheck="false"></textarea>
-            </div>
-            <a class="btn btn-card btn-submit" onclick="submitTask()"><i class="material-icons save-icon">save</i> Save Task</a>
-          </div>
-        </form>
-        <div class="card-action">
-        <a class="btn-card btn"><i class="material-icons">edit</i> Edit</a>
-        <a class="btn-card btn" onclick="deleteTask(${id})"><i class="material-icons delete-word">delete</i> Delete</a>
-          <label class="btn-card btn">
-          <input type="checkbox" class="checkbox-blue" />
-          <span class="btn-card">Done</span>
-          </label>
-        </div> 
-      </div>
-    </div>
-`;
+const addTask = (id, taskTitle, taskDesc, done) => {
+  const task = {
+    id: id,
+    title: taskTitle,
+		description: taskDesc,
+		done: false
+  };
+  console.log("pushing to task array", task);
+	tasks.push(task);
+	addCard(task);
+
+	addTaskToLS(task);
+};
+
+
+const addTaskToLS = (task) => {
+	let tasksInLS;
+
+	if(localStorage.getItem("tasks") === null){
+		tasksInLS = [];	
+		tasksInLS.push(task);
+		localStorage.setItem("tasks", JSON.stringify(tasksInLS));
+	} else {
+			tasksInLS = JSON.parse(localStorage.getItem("tasks"));
+			tasksInLS.push(task);
+			localStorage.setItem("tasks", JSON.stringify(tasksInLS));
+	}
 }
 
+const editTasksLS = (id, cardTitle, cardDescription) => {
+	let tasksInLS = JSON.parse(localStorage.getItem("tasks"));
+
+	const index = tasksInLS.findIndex(task => task.id === id);
+	tasksInLS[index] = {
+		id: id,
+		title: cardTitle,
+		description: cardDescription,
+		done: false
+	}	
+		localStorage.setItem("tasks", JSON.stringify(tasksInLS));
+}
+	
+const deleteTasksLS = id => {
+	let tasksInLS = JSON.parse(localStorage.getItem("tasks"));
+	if(tasksInLS.length > 1){
+	const index = tasksInLS.findIndex(task => task.id === id);
+	tasksInLS.splice(index, 1);
+	localStorage.setItem("tasks", JSON.stringify(tasksInLS));
+	console.log(tasksInLS);
+	} else {
+		localStorage.removeItem("tasks");
+	}
+}
+
+
+const showList = () => {
+	let tasksInLS = JSON.parse(localStorage.getItem("tasks"));
+	if(localStorage.getItem("tasks") !== null){
+	tasks = tasksInLS;
+
+	tasksInLS.forEach(task => {
+		let newCard = `
+  <div class="col s6 card-container" id="card-${task.id}">
+		<div class="card task-card">
+		<form class="task-form" id="${task.id}">
+		<div class="card-content blue-text">
+		<p class="right">
+			<label>
+				<input type="checkbox" class="checkbox-blue" onchange="checkboxChange(${task.id})" id="checkbox"/>
+				<span></span>
+			</label>
+		</p>
+    </p>
+		<div class="input-field">
+		<input type="text" class="task-card-title" id="task-${task.id}-title" maxLength="150" value="${task.title}" spellcheck="false" readonly>
+		</div>
+		<div class="input-field">
+								<input type="text" class="task-card-txt" id="task-${task.id}-desc" maxLength="150" value="${task.description}" spellcheck="false" readonly>
+								</div>
+								<button type="button" class="btn btn-card btn-submit" id="submit-${task.id}" style="display:none" onclick="submitTask(${task.id})"><i class="material-icons save-icon">save</i> Save Task</button>
+							</div>
+					</form>
+					<div class="card-action">
+					<button type="button" class="btn btn-card" onclick="cancelEdit(${task.id})" id="cancel-${task.id}" style="display:none"><i class="material-icons cancel-icon">cancel</i> Cancel</button>
+					<button class="btn-card btn" onclick="editCard(${task.id})" id="edit-${task.id}"><i class="material-icons">edit</i> Edit</button>
+					<button class="btn-card btn" onclick="deleteTask(${task.id})"><i class="material-icons delete-word">delete</i> Delete</button>
+						</div> 
+						</div>
+						</div>
+						`;
+cardsWrapper.innerHTML += newCard;
+		});
+	}
+}
+
+	const addCard = task => {
+
+	let newCard = `
+  <div class="col s6 card-container" id="card-${task.id}">
+		<div class="card task-card">
+		<form class="task-form" id="${task.id}">
+		<div class="card-content blue-text">
+		<p class="right">
+			<label>
+				<input type="checkbox" class="checkbox-blue" id="checkbox" onchange="checkboxChange(${task.id})"/>
+				<span></span>
+			</label>
+		</p>
+    </p>
+		<div class="input-field">
+		<input type="text" class="task-card-title" id="task-${task.id}-title" maxLength="150" value="${task.title}" spellcheck="false" readonly>
+		</div>
+		<div class="input-field">
+								<input type="text" class="task-card-txt" id="task-${task.id}-desc" maxLength="150" value="${task.description}" spellcheck="false" readonly>
+								</div>
+								<button type="button" class="btn btn-card btn-submit" id="submit-${task.id}" style="display:none" onclick="submitTask(${task.id})"><i class="material-icons save-icon">save</i> Save Task</button>
+							</div>
+					</form>
+					<div class="card-action">
+					<button type="button" class="btn btn-card" onclick="cancelEdit(${task.id})" id="cancel-${task.id}" style="display:none"><i class="material-icons cancel-icon">cancel</i> Cancel</button>
+					<button class="btn-card btn" onclick="editCard(${task.id})" id="edit-${task.id}"><i class="material-icons">edit</i> Edit</button>
+					<button class="btn-card btn" onclick="deleteTask(${task.id})"><i class="material-icons delete-word">delete</i> Delete</button>
+						</div> 
+						</div>
+						</div>
+						`;
+cardsWrapper.innerHTML += newCard;
+	}
+
+const checkboxChange = (id) => {
+	let tasksInLS = JSON.parse(localStorage.getItem("tasks"));
+	const index = tasksInLS.findIndex(task => task.id === id);
+	const checkbox = document.getElementById("checkbox");
+	if(checkbox.checked === true){
+		tasksInLS[index].done = true;
+		checkbox.checked = true;
+		localStorage.setItem("tasks", JSON.stringify(tasksInLS));
+	} else{
+		tasksInLS[index].done = false;
+		localStorage.setItem("tasks", JSON.stringify(tasksInLS));
+	}
+}
+
+const editCard = id => {
+	document.getElementById(`submit-${id}`).style.display = "inline-block";
+	document.getElementById(`edit-${id}`).style.display = "none";
+	document.getElementById(`cancel-${id}`).style.display = "inline-block";
+	document.getElementById(`task-${id}-title`).removeAttribute("readonly");
+	document.getElementById(`task-${id}-desc`).removeAttribute("readonly");
+	
+}
+
+const cancelEdit = id => {
+	hideBtns(id);
+	const task = tasks.find(task => task.id === id);
+	document.getElementById(`task-${id}-title`).value = task.title;
+	document.getElementById(`task-${id}-desc`).value = task.description; 
+}
+
+const hideBtns = id => {
+	document.getElementById(`submit-${id}`).style.display = "none";
+	document.getElementById(`edit-${id}`).style.display = "inline-block";
+	document.getElementById(`cancel-${id}`).style.display = "none";
+	document.getElementById(`task-${id}-title`).readOnly = true;
+	document.getElementById(`task-${id}-desc`).readOnly = true;
+}
+
+const deleteTask = id => {
+	tasks.forEach((task, index) =>{
+		if(task.id == id){
+			tasks.splice(index, 1);
+		}
+	});
+	document.getElementById(`card-${id}`).style.display = "none";
+	console.log(tasks);
+	deleteTasksLS(id);
+}
