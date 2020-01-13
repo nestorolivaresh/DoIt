@@ -71,7 +71,7 @@ const submitTask = (id=null) => {
 	}
 };
 
-const addTask = (id, taskTitle, taskDesc, done) => {
+const addTask = (id, taskTitle, taskDesc) => {
   const task = {
     id: id,
     title: taskTitle,
@@ -139,7 +139,7 @@ const showList = () => {
 		<div class="card-content blue-text">
 		<p class="right">
 			<label>
-				<input type="checkbox" class="checkbox-blue" onchange="checkboxChange(${task.id})" id="checkbox"/>
+				<input type="checkbox" class="checkbox-blue" id="checkbox-${task.id}" onchange="checkboxChange(${task.id})"/>
 				<span></span>
 			</label>
 		</p>
@@ -162,6 +162,14 @@ const showList = () => {
 						</div>
 						`;
 cardsWrapper.innerHTML += newCard;
+// const index = tasksInLS.findIndex(LStask => LStask.id === task.id);
+// if(tasksInLS[index].done = true){
+// document.getElementById(`checkbox-${task.id}`).setAttribute("checked", "");
+// console.log("test");
+// } else if (tasksInLS[index].done = false){
+// document.getElementById(`checkbox-${task.id}`).setAttribute("checked", "false");
+// console.log("what");
+// }
 		});
 	}
 }
@@ -175,7 +183,7 @@ cardsWrapper.innerHTML += newCard;
 		<div class="card-content blue-text">
 		<p class="right">
 			<label>
-				<input type="checkbox" class="checkbox-blue" id="checkbox" onchange="checkboxChange(${task.id})"/>
+				<input type="checkbox" class="checkbox-blue" id="checkbox-${task.id}" onchange="checkboxChange(${task.id})"/>
 				<span></span>
 			</label>
 		</p>
@@ -200,19 +208,19 @@ cardsWrapper.innerHTML += newCard;
 cardsWrapper.innerHTML += newCard;
 	}
 
-const checkboxChange = (id) => {
-	let tasksInLS = JSON.parse(localStorage.getItem("tasks"));
-	const index = tasksInLS.findIndex(task => task.id === id);
-	const checkbox = document.getElementById("checkbox");
-	if(checkbox.checked === true){
-		tasksInLS[index].done = true;
-		checkbox.checked = true;
-		localStorage.setItem("tasks", JSON.stringify(tasksInLS));
-	} else{
-		tasksInLS[index].done = false;
-		localStorage.setItem("tasks", JSON.stringify(tasksInLS));
-	}
-}
+// const checkboxChange = (id) => {
+// 	let tasksInLS = JSON.parse(localStorage.getItem("tasks"));
+// 	const index = tasksInLS.findIndex(task => task.id === id);
+// 	const checkbox = document.getElementById(`checkbox-${id}`);
+// 	if(checkbox.checked){
+// 		tasksInLS[index].done = true;
+		
+// 		localStorage.setItem("tasks", JSON.stringify(tasksInLS));
+// 	} else{
+// 		tasksInLS[index].done = false;
+// 		localStorage.setItem("tasks", JSON.stringify(tasksInLS));
+// 	}
+// }
 
 const editCard = id => {
 	document.getElementById(`submit-${id}`).style.display = "inline-block";

@@ -1,6 +1,7 @@
 @media (max-width: 768px) {
-.popup, .input-field{
-width: 100%;
+
+.popup{
+width: 100% !important;
 }
 
 .card-title{
