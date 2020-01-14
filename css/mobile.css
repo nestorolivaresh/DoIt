@@ -1,7 +1,12 @@
+/* Mobile general */
 @media (max-width: 768px) {
 
 .popup{
 width: 100% !important;
+}
+
+.card-container{
+  width: 100% !important;
 }
 
 .card-title{
@@ -17,12 +22,33 @@ width: 100% !important;
 text-align: center;
 }
 
-.card-container{
-  width: 325px !important;
-}
-
 .task-card-title{
   font-size: 1.7rem !important;
 }
 
+}
+
+/* iPhone 5 */
+.title-div{
+  text-align: center !important;
+}
+
+.title-txt{
+  font-size: 3.5rem !important;
+}
+
+#img, #img2{
+  height: 3rem !important;
+}
+
+
+/* iPad */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .card-container{
+    width: 100% !important;
+  }
+
+  .btn-card, .btn-save{
+    font-size: 1.5rem !important;
+  }
 }

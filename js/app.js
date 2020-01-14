@@ -151,7 +151,7 @@ const showList = () => {
 		<div class="input-field">
 								<input type="text" class="task-card-txt" id="task-${task.id}-desc" maxLength="150" value="${task.description}" spellcheck="false" readonly>
 								</div>
-								<button type="button" class="btn btn-card btn-submit" id="submit-${task.id}" style="display:none" onclick="submitTask(${task.id})"><i class="material-icons save-icon">save</i> Save Task</button>
+								<button type="button" class="btn btn-card btn-save" id="save-${task.id}" style="display:none" onclick="submitTask(${task.id})"><i class="material-icons save-icon">save</i> Save Task</button>
 							</div>
 					</form>
 					<div class="card-action">
@@ -187,7 +187,7 @@ const addCard = task => {
 		<div class="input-field">
 								<input type="text" class="task-card-txt" id="task-${task.id}-desc" maxLength="150" value="${task.description}" spellcheck="false" readonly>
 								</div>
-								<button type="button" class="btn btn-card btn-submit" id="submit-${task.id}" style="display:none" onclick="submitTask(${task.id})"><i class="material-icons save-icon">save</i> Save Task</button>
+								<button type="button" class="btn btn-card btn-save" id="save-${task.id}" style="display:none" onclick="submitTask(${task.id})"><i class="material-icons save-icon">save</i> Save Task</button>
 							</div>
 					</form>
 					<div class="card-action">
@@ -202,7 +202,7 @@ const addCard = task => {
 };
 
 const editCard = id => {
-  document.getElementById(`submit-${id}`).style.display = "inline-block";
+  document.getElementById(`save-${id}`).style.display = "inline-block";
   document.getElementById(`edit-${id}`).style.display = "none";
   document.getElementById(`cancel-${id}`).style.display = "inline-block";
   document.getElementById(`task-${id}-title`).removeAttribute("readonly");
@@ -217,7 +217,7 @@ const cancelEdit = id => {
 };
 
 const hideBtns = id => {
-  document.getElementById(`submit-${id}`).style.display = "none";
+  document.getElementById(`save-${id}`).style.display = "none";
   document.getElementById(`edit-${id}`).style.display = "inline-block";
   document.getElementById(`cancel-${id}`).style.display = "none";
   document.getElementById(`task-${id}-title`).readOnly = true;
