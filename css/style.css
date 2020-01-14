@@ -68,10 +68,6 @@ padding-left: 1rem;
   display: none;
 }
 
-.add-icon{
-  padding-top: 8px !important;
-}
-
 .btn{
   font-family: 'Quicksand', sans-serif;
   text-transform: none !important;
@@ -102,10 +98,6 @@ padding-left: 1rem;
   color: var(--primary-color) !important;
 }
 
-.add-icon{
-  margin-top: 35%;
-}
-
 .card-container{
   width: 430px !important;
   height: 100%;
@@ -133,12 +125,17 @@ color: var(--primary-color);
   color: var(--primary-color) !important;
 }
 
-.btn-card{
+.btn-card, .btn-submit, .btn-save{
   background-color: var(--secondary-color) !important;
   padding: 0.5rem;
   font-size: 1.1rem !important;
   color: var(--primary-color) !important;
   box-shadow: none !important;
+}
+
+.btn-submit{
+  padding-top: 2rem !important;
+  font-size: 1.5rem !important;
 }
 
 .btn-card:focus {
